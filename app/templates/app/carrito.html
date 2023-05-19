@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,700;1,400;1,700&family=Open+Sans:ital,wght@0,400;0,700;1,600&display=swap" rel="stylesheet">
+    {% load static %}
+    {% block css %}
+    {% endblock %}
+    <link rel="stylesheet" href="{% static 'app/css/estilos.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+<header id="header" >
+    <img class="menu" src="{% static 'app/img/menuiconwhite.png' %}" alt="menu" id="menu">
+    <div class="contenedor_logo">
+        <img  class="logo"  src="{% static 'app/img/musicprologo.png' %}" alt="logo">
+    </div>
+
+   
+
+    <div>
+        
+        <nav id="nav">         
+            <ul>
+                <li>
+                    <a href="{% url 'home' %}"> Volver </a>
+                </li>
+                
+            </ul>
+            
+        </nav>
+
+    </div>
+
+
+
+</header>
+
+<body>
+    
+    
+    <h1>Carrito de compras</h1>
+    <br>
+    <br>
+    <br>
+
+    <div class="carrito-container1">
+        {% for producto in productos_carrito %}
+            <div class="producto1">
+                <img src="{% static producto.imagen %}" alt="Imagen del producto">
+                <div class="detalle1">
+                    <p>Nombre: {{ producto.nombre }}</p>
+                    <p>Precio: {{ producto.precio }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <footer >
+        <div class="marcas">
+            <img src="{% static 'app/img/footer/sdlogo.png' %}" alt="soundcloud">
+            <img src="{% static 'app/img/footer/youtube.png' %}" alt="youtube">
+            <img src="{% static 'app/img/footer/spotify.png' %}" alt="spotify">
+            <img src="{% static 'app/img/footer/amazon.png' %}" alt="amazon">
+            <img src="{% static 'app/img/footer/applemusic.png' %}" alt="apple">
+        </div>
+        <div class="logo_footer">
+            <img src="{% static 'app/img/musicprologo.png' %}" alt="logo" >
+            
+        </div>
+    </footer>
+
+
+
+
+    <script src="{% static 'js/productos.js' %}"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</body>
+</html>
+

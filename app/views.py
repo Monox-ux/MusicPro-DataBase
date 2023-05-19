@@ -26,7 +26,32 @@ database = firebase.database()
 # Create your views here.
 
 def home(request):
-    return render(request, 'app/home.html' )
+    productos_data = {
+        'producto1': {
+            'nombre': database.child('productos').child('producto1').child('nombre').get().val(),
+            'precio': database.child('productos').child('producto1').child('precio').get().val(),
+            'imagen': 'img/guitarra.png'
+        },
+        'producto2': {
+            'nombre': database.child('productos').child('producto2').child('nombre').get().val(),
+            'precio': database.child('productos').child('producto2').child('precio').get().val(),
+            'imagen': 'img/bateria.png'
+        },
+        'producto3': {
+            'nombre': database.child('productos').child('producto3').child('nombre').get().val(),
+            'precio': database.child('productos').child('producto3').child('precio').get().val(),
+            'imagen': 'img/bajo.png'
+        },
+        'producto4': {
+            'nombre': database.child('productos').child('producto4').child('nombre').get().val(),
+            'precio': database.child('productos').child('producto4').child('precio').get().val(),
+            'imagen': 'img/teclado.png'
+        }
+    }
+    return render(request, 'app/home.html', {
+        'productos': productos_data
+    })
+
 
 def contacto(request):
     return render(request, 'app/contacto.html' )
@@ -64,19 +89,31 @@ def productos(request):
         'productos': productos_data
     })
 
-
 def carrito(request):
     productos_carrito = request.session.get('carrito', [])
+    
+    total_precio = 0
     
     for producto in productos_carrito:
         nombre = producto['nombre']
         precio = producto['precio']
         imagen = f'app/img/{nombre}.png'  # Ajusta la ruta de la imagen según tu estructura de carpetas
         producto['imagen'] = imagen
+        
+        # Eliminar símbolos de moneda y caracteres no numéricos del precio
+        precio = precio.replace('$', '').replace(',', '').replace('.', '')
+        
+        # Convertir el precio a float
+        precio_float = float(precio)
+        
+        # Sumar el precio al total
+        total_precio += precio_float
     
     return render(request, 'app/carrito.html', {
-        'productos_carrito': productos_carrito
+        'productos_carrito': productos_carrito,
+        'total_precio': total_precio
     })
+
 
 
 
@@ -105,5 +142,9 @@ def agregar_al_carrito(request):
         return redirect('carrito')
 
 
+
+def limpiar_carrito(request):
+    request.session['carrito'] = []  # Vacía la lista de productos del carrito en la sesión
+    return redirect('carrito')  # Redirige al carrito después de limpiarlo
 
 

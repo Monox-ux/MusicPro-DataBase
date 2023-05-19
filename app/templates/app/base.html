@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tecnomarket</title>
+    <title>MusicPro</title>
     <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,700;1,400;1,700&family=Open+Sans:ital,wght@0,400;0,700;1,600&display=swap" rel="stylesheet">
     {% load static %}
     {% block css %}
@@ -15,11 +15,12 @@
   </head>
 <body>
 
-    
     <header id="header" >
         <img class="menu" src="{% static 'app/img/menuiconwhite.png' %}" alt="menu" id="menu">
         <div class="contenedor_logo">
+            <a href="{% url 'home' %}">   
             <img  class="logo"  src="{% static 'app/img/musicprologo.png' %}" alt="logo">
+        </a>
         </div>
 
         <div>

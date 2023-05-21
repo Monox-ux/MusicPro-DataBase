@@ -353,6 +353,7 @@ textarea {
     border: none;
     padding: 5px 10px;
     cursor: pointer;
+    text-align: center;
 }
 
 .btn-limpiar {
@@ -361,4 +362,5 @@ textarea {
     border: none;
     padding: 5px 10px;
     cursor: pointer;
+    text-align: center;
 }

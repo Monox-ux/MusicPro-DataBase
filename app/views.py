@@ -4,6 +4,10 @@ import pyrebase
 from firebase_admin import db
 
 from django.templatetags.static import static
+from django.contrib import messages
+
+
+
 
 config = {
 
@@ -24,6 +28,13 @@ database = firebase.database()
 
 
 # Create your views here.
+
+
+def contacto(request):
+    return render(request, 'app/contacto.html' )
+
+def galeria(request):
+    return render(request, 'app/galeria.html' )
 
 def home(request):
     productos_data = {
@@ -51,14 +62,6 @@ def home(request):
     return render(request, 'app/home.html', {
         'productos': productos_data
     })
-
-
-def contacto(request):
-    return render(request, 'app/contacto.html' )
-
-def galeria(request):
-    return render(request, 'app/galeria.html' )
-
 
 
 def productos(request):
@@ -114,9 +117,6 @@ def carrito(request):
         'total_precio': total_precio
     })
 
-
-
-
 def agregar_al_carrito(request):
     if request.method == 'POST':
         producto_id = request.POST.get('producto_id')
@@ -142,9 +142,33 @@ def agregar_al_carrito(request):
         return redirect('carrito')
 
 
-
 def limpiar_carrito(request):
     request.session['carrito'] = []  # Vacía la lista de productos del carrito en la sesión
     return redirect('carrito')  # Redirige al carrito después de limpiarlo
 
+
+def carrito(request):
+    productos_carrito = request.session.get('carrito', [])
+    
+    total_precio = 0
+    
+    for producto in productos_carrito:
+        nombre = producto['nombre']
+        precio = producto['precio']
+        imagen = f'app/img/{nombre}.png'  # Ajusta la ruta de la imagen según tu estructura de carpetas
+        producto['imagen'] = imagen
+        
+        # Eliminar símbolos de moneda y caracteres no numéricos del precio
+        precio = precio.replace('$', '').replace(',', '').replace('.', '')
+        
+        # Convertir el precio a float
+        precio_float = float(precio)
+        
+        # Sumar el precio al total
+        total_precio += precio_float
+    
+    return render(request, 'app/carrito.html', {
+        'productos_carrito': productos_carrito,
+        'total_precio': total_precio
+    })
 
